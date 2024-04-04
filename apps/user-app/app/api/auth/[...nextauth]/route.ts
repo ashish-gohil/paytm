@@ -1,3 +1,4 @@
+import prisma from "@repo/db/client";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -14,32 +15,68 @@ import CredentialsProvider from "next-auth/providers/credentials";
 //     req,
 //   });
 // }
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. 'Sign in with...')
       name: "Credentials",
-      // The credentials is used to generate a suitable form on the sign in page.
-      // You can specify whatever fields you are expecting to be submitted.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "Enter Mail address",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "Enter Password",
+        },
       },
-      async authorize(credentials, req) {
-        const a = new Promise((resolve, reject) => {
-          setTimeout(resolve, 3000);
+      async authorize(credentials): Promise<any> {
+        // try {
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials?.username || "",
+          },
         });
-        return await a.then();
+        if (!user || user?.password !== credentials?.password) {
+          return null;
+        }
+        // return {
+        //   userId: user?.id,
+        //   name: user?.fullname,
+        //   email: user?.email,
+        // };
+        return user;
       },
-      // Return null if user data could not be retrieved
-      //   },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token, user }) {
+      token.userId = token.sub;
+      console.log(token);
+      console.log(user);
+      return token;
+    },
+    async session({
+      session,
+      token,
+      user,
+    }: {
+      session: any;
+      token: any;
+      user: any;
+    }) {
+      console.log(user);
+      session.user.userId = token.userId;
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+// export { handler as GET, handler as POST };
+export const GET = handler;
+export const POST = handler;

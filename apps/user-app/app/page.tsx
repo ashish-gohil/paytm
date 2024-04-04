@@ -1,4 +1,4 @@
-import PaytmInitials from "../components/PaytmInitials";
+import GetPaytmButton from "../components/GetPaytmButton";
 
 export default function Page(): JSX.Element {
   return (
@@ -19,14 +19,7 @@ export default function Page(): JSX.Element {
               </p>
             </div>
             <div className="flex justify-center items-center pt-5 sm:justify-start">
-              <button className="bg-blue-500 p-2 rounded-lg flex flex-row justify-center items-center   hover:translate-y-0.5 shadow-slate-600 shadow-lg relative hover:shadow-none duration-200">
-                <div className=" justify-center items-center">
-                  <PaytmInitials />
-                </div>
-                <p className="pl-1 items-center justify-center font-extrabold text-gray-800">
-                  Get Paytm
-                </p>
-              </button>
+              <GetPaytmButton />
             </div>
           </div>
           <div className="relative w-full sm:w-[160%] ">
