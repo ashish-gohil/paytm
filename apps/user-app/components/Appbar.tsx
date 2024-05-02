@@ -19,7 +19,7 @@ export default function () {
             <div className="p-2">
               <button
                 onClick={() => {
-                  signOut();
+                  signOut({ callbackUrl: "/" });
                 }}
               >
                 LogOut
@@ -31,7 +31,7 @@ export default function () {
             <div className="p-2">
               <button
                 onClick={() => {
-                  signIn();
+                  signIn(undefined, { callbackUrl: "/dashboard" });
                 }}
               >
                 UserLogin
