@@ -1,10 +1,10 @@
 "use client";
-import HomeIcon from "./HomeIcon";
+import HomeIcon from "../Icons/HomeIcon";
 import SidebarItem from "./SidebarItem";
-import TransectionIcon from "./TransectionIcon";
-import TransferIcon from "./TransferIcon";
-import P2PTransfer from "./P2PTransfer";
-import { ActiveTab } from "../app/dashboard/layout";
+import TransectionIcon from "../Icons/TransectionIcon";
+import TransferIcon from "../Icons/TransferIcon";
+import { ActiveTab } from "../../app/dashboard/layout";
+import P2PTransferIcon from "../Icons/P2PTransferIcon";
 
 interface SidebarParams {
   activeTab: ActiveTab;
@@ -48,7 +48,7 @@ export default function ({ activeTab, setActiveTab }: SidebarParams) {
             setActiveTab("P2PTransfer");
           }}
         >
-          <P2PTransfer />
+          <P2PTransferIcon />
         </SidebarItem>
       </div>
     </div>

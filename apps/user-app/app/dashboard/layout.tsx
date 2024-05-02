@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import SideBar from "../../components/SideBar";
+import SideBar from "../../components/Sidebar/SideBar";
 
 export type ActiveTab = "Home" | "Transfer" | "Transaction" | "P2PTransfer";
 
