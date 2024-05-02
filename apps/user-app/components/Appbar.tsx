@@ -6,7 +6,7 @@ export default function () {
   const session = useSession();
   console.log(session?.status);
   return (
-    <div className="flex flex-row items-center bg-blue-50 p-2 justify-between">
+    <div className="flex flex-row items-center bg-blue-50 p-2 justify-between h-13">
       <div>
         <Logo />
       </div>
