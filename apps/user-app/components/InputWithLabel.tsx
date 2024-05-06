@@ -2,13 +2,20 @@ export default function ({
   labelText,
   isPrice = false,
   placeHolderText = "",
+  className='',
+  inputValue,
+  inputChangeHandler
+  
 }: {
   labelText: string;
   isPrice: boolean;
   placeHolderText: string;
+  className? : string;
+  inputValue : string | number | undefined;
+inputChangeHandler: (e:React.ChangeEvent<HTMLInputElement>)=>void
 }) {
   return (
-    <div>
+    <div className={className}>
       <label
         htmlFor="price"
         className="block text-sm font-medium leading-6 text-gray-900"
@@ -29,6 +36,8 @@ export default function ({
           id="price"
           className={`block w-full rounded-md border-0 py-1.5 ${isPrice ? "pl-7" : "pl-1"} pr-1 text-gray-900 ring-purple-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6`}
           placeholder={placeHolderText}
+          value={inputValue}
+          onChange={inputChangeHandler}
         />
       </div>
     </div>

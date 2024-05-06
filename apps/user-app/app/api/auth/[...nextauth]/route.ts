@@ -1,5 +1,6 @@
 import prisma from "@repo/db/client";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions, Session, SessionOptions } from "next-auth";
+import { DefaultSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 // import { NextApiRequest } from "next";
@@ -62,20 +63,10 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       token.userId = token.sub;
-      console.log(token);
-      console.log(user);
       return token;
     },
-    async session({
-      session,
-      token,
-      user,
-    }: {
-      session: any;
-      token: any;
-      user: any;
-    }) {
-      console.log(user);
+    async session({ session, token }: { session: any; token: any }) {
+      // @ts-ignore
       session.user.userId = token.userId;
       return session;
     },
