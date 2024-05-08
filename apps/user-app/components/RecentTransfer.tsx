@@ -9,9 +9,7 @@ type RecentTransfer = {
   id: number;
 };
 export default function () {
-  const [recentTransfers, setRecentTransfers] = useState<RecentTransfer[]>([
-    { isReceived: true, date: new Date(), amount: 100, id: 2 },
-  ]);
+  const [recentTransfers, setRecentTransfers] = useState<RecentTransfer[]>([]);
   const getAllRecentTransfers = async () => {
     const data = (await getRecentTransfers()) || [];
     //@ts-ignore
@@ -35,20 +33,28 @@ export default function () {
       <HorizontalLineSaperator />
 
       <div className="flex flex-col max-h-28 overflow-scroll overflow-x-clip">
-        {recentTransfers.map((tnx) => {
-          return (
-            <div className="flex p-1 justify-between items-center">
-              <div className="flex flex-col ">
-                <div className="text-xs">
-                  {tnx.isReceived ? "Received" : "Sent"}
+        {recentTransfers.length > 0 ? (
+          recentTransfers.map((tnx) => {
+            return (
+              <div className="flex p-1 justify-between items-center">
+                <div className="flex flex-col ">
+                  <div className="text-xs">
+                    {tnx.isReceived ? "Received" : "Sent"}
+                  </div>
+                  {/* //sent/received/processing */}
+                  <div className="text-[8px]">{tnx.date.toDateString()}</div>
                 </div>
-                {/* //sent/received/processing */}
-                <div className="text-[10px]">{tnx.date.toDateString()}</div>
+                <div className="pl-1">{`${tnx.isReceived ? "+" : "-"}${tnx.amount / 100} ₹`}</div>
               </div>
-              <div className="pl-1">{`${tnx.isReceived ? "+" : "-"}${tnx.amount / 100} ₹`}</div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <div className="items-center">
+            <p className="text-[12px] items-center w-full">
+              No Recent Transfer
+            </p>
+          </div>
+        )}
       </div>
     </>
   );

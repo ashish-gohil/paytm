@@ -27,19 +27,19 @@ export default function () {
         <HorizontalLineSaperator />
         <div className="flex p-1 justify-between">
           <div className="">Total Balance</div>
-          <div className="pl-1">{`${totalBalance} ₹`}</div>
+          <div className="pl-1">{`${totalBalance / 100} ₹`}</div>
         </div>
         <HorizontalLineSaperator />
 
         <div className="flex p-1 justify-between">
           <div className="">Locked Balance</div>
-          <div className="pl-1">{`${lockedBalance} ₹`}</div>
+          <div className="pl-1">{`${lockedBalance / 100} ₹`}</div>
         </div>
         <HorizontalLineSaperator />
 
         <div className="flex p-1 justify-between">
           <div className="">Available Balance</div>
-          <div className="pl-1">{`${availableBalance} ₹`}</div>
+          <div className="pl-1">{`${availableBalance / 100} ₹`}</div>
         </div>
         <HorizontalLineSaperator />
       </div>

@@ -17,6 +17,7 @@ export async function createOnRampTransaction(
           provider,
           amount: amount * 100,
           startTime: new Date(),
+          token: String(Math.random()), // idealy it should be provided by bank, by calling bank api with userid and amount
           // @ts-ignore
           userId: Number(session?.user?.userId || 1),
         },

@@ -29,6 +29,7 @@ model OnRampTransaction{
   userId Int 
   amount Int 
   provider Provider
+  token String @unique()
 }
 
 enum Status {
