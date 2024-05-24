@@ -1,5 +1,5 @@
 "use client";
-import { BankOption } from "./AddMoney";
+import { BankOption } from "./transfer/AddMoney";
 import { Provider } from "@prisma/client";
 
 type FuncArg = {

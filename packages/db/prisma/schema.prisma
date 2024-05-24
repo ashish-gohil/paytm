@@ -19,8 +19,12 @@ model User {
   password String? 
   fullname String?
   onRampTransactions OnRampTransaction[]
+  mobileNumber String @unique 
+  sentTransfers     P2pTransfer[]       @relation(name: "FromUserRelation")
+  receivedTransfers P2pTransfer[]       @relation(name: "ToUserRelation")
+  availableBalance Int @default(0)
+  lockedBalance Int @default(0)
 }
-
 model OnRampTransaction{
   id Int @id @default(autoincrement())
   status Status @default(PROCESSIONG)
@@ -30,6 +34,17 @@ model OnRampTransaction{
   amount Int 
   provider Provider
   token String @unique()
+}
+
+model P2pTransfer{
+  id Int @id @default(autoincrement())
+  status Status @default(PROCESSIONG)
+  startTime DateTime @default(now())
+  fromUserId Int
+  fromUser   User         @relation(name: "FromUserRelation", fields: [fromUserId], references: [id])
+  toUserId   Int
+  toUser     User         @relation(name: "ToUserRelation", fields: [toUserId], references: [id])
+  amount Int 
 }
 
 enum Status {

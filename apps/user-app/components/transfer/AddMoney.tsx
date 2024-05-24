@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { createOnRampTransaction } from "../app/api/action/onRampTransaction";
-import DropdownWithLabel from "./DropdownWithLabel";
-import HorizontalLineSaperator from "./HorizontalLineSaperator";
-import InputWithLabel from "./InputWithLabel";
+import { createOnRampTransaction } from "../../app/api/action/onRampTransaction";
+import DropdownWithLabel from "../DropdownWithLabel";
+import HorizontalLineSaperator from "../HorizontalLineSaperator";
+import InputWithLabel from "../InputWithLabel";
 import { Provider } from "@prisma/client";
 import { useRouter } from "next/navigation";
 

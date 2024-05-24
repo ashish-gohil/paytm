@@ -1,28 +1,19 @@
-import AddMoney from "../../../components/AddMoney";
-import Balance from "../../../components/Balance";
+import AddMoney from "../../../components/transfer/AddMoney";
+import Balance from "../../../components/transfer/Balance";
 import Card from "../../../components/Card";
 import PageHeader from "../../../components/PageHeader";
-import RecentTransfer from "../../../components/RecentTransfer";
-import TransectionHistory from "../../../components/RecentTransfer";
+import RecentTransfer from "../../../components/transfer/RecentTransfer";
+import TransectionHistory from "../../../components/transfer/RecentTransfer";
+import SendMoney from "../../../components/p2p/SendMoney";
 
 export default function () {
   return (
     <div className="w-full bg-purple-100">
-      <PageHeader header={"Transfer"} />
-      <div className="m-1">
-        <div className="grid grid-cols-2 gap-1">
-          <Card className="h-full max-h-60">
-            <AddMoney />
-          </Card>
-          <div className="grid grid-flow-row gap-1 ">
-            <Card className="">
-              <Balance />
-            </Card>
-            <Card className=" ">
-              <RecentTransfer />
-            </Card>
-          </div>
-        </div>
+      <PageHeader header={"P2P Transfer"} />
+      <div className="m-1 flex justify-center">
+        <Card className="h-full max-h-60 max-w-[900px]">
+          <SendMoney />
+        </Card>
       </div>
     </div>
   );

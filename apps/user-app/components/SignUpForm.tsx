@@ -11,6 +11,7 @@ export default function () {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [mobile, setMobile] = useState<string>("");
   useEffect(() => {
     if (!isModalOpen) {
       setMessage("");
@@ -19,7 +20,7 @@ export default function () {
 
   const signUpHandler = async () => {
     try {
-      const res = await signUpAction({ name, email, password });
+      const res = await signUpAction({ name, email, password, mobile });
       if (res) {
         setMessage("SignUp is Successful!");
         setIsSuccess(true);
@@ -56,6 +57,17 @@ export default function () {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
+            }}
+            className=""
+            placeholder="Enter Email"
+          ></input>
+        </div>
+        <div>
+          <p>Mobile Number</p>
+          <input
+            value={mobile}
+            onChange={(e) => {
+              setMobile(e.target.value);
             }}
             className=""
             placeholder="Enter Email"

@@ -1,6 +1,6 @@
 "use client";
-import { getRecentTransfers } from "../app/api/action/getAllRecentTransfers";
-import HorizontalLineSaperator from "./HorizontalLineSaperator";
+import { getRecentTransfers } from "../../app/api/action/getAllRecentTransfers";
+import HorizontalLineSaperator from "../HorizontalLineSaperator";
 import { useState, useEffect } from "react";
 type RecentTransfer = {
   isReceived?: boolean;

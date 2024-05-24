@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import HorizontalLineSaperator from "./HorizontalLineSaperator";
-import { getTransferBalances } from "../app/api/action/getTransferBalance";
+import HorizontalLineSaperator from "../HorizontalLineSaperator";
+import { getTransferBalances } from "../../app/api/action/getTransferBalance";
 
 export default function () {
   const [totalBalance, setTotalBalance] = useState<number>(0);
@@ -13,6 +13,7 @@ export default function () {
 
   const getAllbalances = async () => {
     const data = await getTransferBalances();
+    console.log(data);
     if (!data?.message) {
       setAvailableBalance(data?.availableBalance || 0);
       setLockedBalance(data?.lockedBalance || 0);

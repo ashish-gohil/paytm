@@ -8,31 +8,28 @@ export async function getTransferBalances() {
     const session = await getServerSession(authOptions);
     // @ts-ignore
     if (session && session?.user?.userId) {
-      const data = await prisma.onRampTransaction.findMany({
+      const user = await prisma.user.findUnique({
         where: {
           // @ts-ignore
-          userId: Number(session?.user?.userId),
+          id: Number(session?.user?.userId),
         },
         select: {
-          status: true,
-          amount: true,
+          availableBalance: true,
+          lockedBalance: true,
         },
       });
-      let totalBalance = 0;
-      let lockedBalance = 0;
-      data.forEach((sts) => {
-        if (sts.status === "SUCCESSFUL" || sts.status === "LOCKED") {
-          totalBalance += sts.amount;
-        }
-        if (sts.status === "LOCKED") {
-          lockedBalance += sts.amount;
-        }
-      });
-      return {
-        totalBalance,
-        lockedBalance,
-        availableBalance: totalBalance - lockedBalance,
-      };
+      if (!user) {
+        return {
+          message: "No User found!",
+        };
+      } else {
+        const { lockedBalance, availableBalance } = user;
+        return {
+          totalBalance: lockedBalance + availableBalance,
+          lockedBalance,
+          availableBalance,
+        };
+      }     
     } else {
       return {
         message: "Unauthorized user!",

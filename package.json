@@ -6,12 +6,15 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prisma-studio": "cd ./packages/db && npx prisma studio"
+    "prisma-studio": "cd ./packages/db && npx prisma studio && cd ../../",
+    "db:migrate": "cd ./packages/db && npx prisma migrate dev && cd ../../",
+    "db:generate": "cd ./packages/db && npx prisma generate && cd ../../"
   },
   "devDependencies": {
     "@repo/common": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "@types/bcrypt": "^5.0.2",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
@@ -27,6 +30,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5"
   }
 }

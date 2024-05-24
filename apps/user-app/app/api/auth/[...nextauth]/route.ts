@@ -1,6 +1,6 @@
 import prisma from "@repo/db/client";
-import NextAuth, { NextAuthOptions, Session, SessionOptions } from "next-auth";
-import { DefaultSession } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
+import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 // import { NextApiRequest } from "next";
@@ -40,7 +40,11 @@ export const authOptions: NextAuthOptions = {
             email: credentials?.username || "",
           },
         });
-        if (!user || user?.password !== credentials?.password) {
+        const isPasswordCorrect = await bcrypt.compare(
+          credentials?.password || "",
+          user?.password || ""
+        );
+        if (!user || !isPasswordCorrect) {
           return null;
         }
         // return {
