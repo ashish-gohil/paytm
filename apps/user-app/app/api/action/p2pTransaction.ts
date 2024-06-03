@@ -1,13 +1,13 @@
 "use server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 import prisma from "@repo/db/client";
+import { authOptions } from "../../lib/auth";
 
 export async function p2pTransfer(to: number, amount: number) {
   try {
     const session = await getServerSession(authOptions);
     // @ts-ignore
-    if (session && session?.user?.userId) {
+    if (session && session?.user?.id) {
       return prisma.$transaction(async (tx) => {
         // 1. Decrement amount from the sender.
         const sender = await tx.user.update({
@@ -18,7 +18,7 @@ export async function p2pTransfer(to: number, amount: number) {
           },
           where: {
             //@ts-ignore
-            id: Number(session?.user?.userId),
+            id: Number(session?.user?.id),
           },
         });
 

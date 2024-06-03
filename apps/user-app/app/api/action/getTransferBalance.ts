@@ -1,17 +1,18 @@
 "use server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 import prisma from "@repo/db/client";
+import { authOptions } from "../../lib/auth";
 
 export async function getTransferBalances() {
   try {
     const session = await getServerSession(authOptions);
     // @ts-ignore
-    if (session && session?.user?.userId) {
+    console.log(session);
+    if (session && session?.user?.id) {
       const user = await prisma.user.findUnique({
         where: {
           // @ts-ignore
-          id: Number(session?.user?.userId),
+          id: Number(session?.user?.id),
         },
         select: {
           availableBalance: true,
@@ -29,7 +30,7 @@ export async function getTransferBalances() {
           lockedBalance,
           availableBalance,
         };
-      }     
+      }
     } else {
       return {
         message: "Unauthorized user!",

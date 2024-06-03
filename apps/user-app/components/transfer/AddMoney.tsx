@@ -79,8 +79,8 @@ export default function () {
       <div className="w-full flex justify-center my-2 ">
         <button
           className="bg-blue-400 hover:bg-blue-500 p-1 rounded-md duration-200 disabled:bg-blue-300 disabled:text-gray-600 disabled:cursor-not-allowed"
-          onClick={() => {
-            createOnRampTransaction(
+          onClick={async () => {
+            await createOnRampTransaction(
               selectdBank?.value || Provider.BOB,
               Number(amount) || 0
             );
