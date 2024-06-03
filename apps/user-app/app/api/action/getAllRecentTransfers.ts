@@ -18,7 +18,7 @@ export async function getRecentTransfers() {
       return data;
     } else {
       return {
-        message: "Unauthorized user!",
+        message: "Unauthorized user credentials!",
       };
     }
   } catch (err) {
