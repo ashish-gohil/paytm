@@ -1,8 +1,10 @@
 "use server";
 import { getServerSession } from "next-auth";
 import prisma from "@repo/db/client";
-import type { Provider } from "@prisma/client";
+// import { Provider } from "@prisma/client";
 import { authOptions } from "../../lib/auth";
+
+import { Provider } from "../../../components/transfer/AddMoney";
 
 export async function createOnRampTransaction(
   provider: Provider,

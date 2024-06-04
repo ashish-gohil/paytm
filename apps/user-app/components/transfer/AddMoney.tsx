@@ -4,9 +4,13 @@ import { createOnRampTransaction } from "../../app/api/action/onRampTransaction"
 import DropdownWithLabel from "../DropdownWithLabel";
 import HorizontalLineSaperator from "../HorizontalLineSaperator";
 import InputWithLabel from "../InputWithLabel";
-import { Provider } from "@prisma/client";
+// import { Provider } from "@prisma/client";
 import { useRouter } from "next/navigation";
-
+export enum Provider {
+  BOB = "BOB",
+  SBI = "SBI",
+  ICICI = "ICICI",
+}
 export type BankOption = {
   value: Provider;
   name: string;
