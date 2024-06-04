@@ -1,7 +1,7 @@
 "use client";
 import { BankOption } from "./transfer/AddMoney";
-import { Provider } from "@prisma/client";
-
+// import { Provider } from "@prisma/client";
+import { Provider } from "./transfer/AddMoney";
 type FuncArg = {
   title?: String;
   options: BankOption[];
