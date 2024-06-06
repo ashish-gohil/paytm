@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 interface PopUpArg {
   message: string;
   isSuccess: boolean;
+  // eslint-disable-next-line no-unused-vars
   setIsModalOpen: (val: boolean) => void;
 }
 

@@ -6,6 +6,7 @@ type FuncArg = {
   title?: String;
   options: BankOption[];
   defaultSelected?: String;
+  // eslint-disable-next-line no-unused-vars
   onChangeOption: (val: Provider) => void;
 };
 
@@ -15,6 +16,7 @@ export default function ({
   defaultSelected,
   onChangeOption,
 }: FuncArg) {
+  console.log(defaultSelected);
   return (
     <>
       <label className="block mb-2 text-sm font-medium text-gray-900 ">

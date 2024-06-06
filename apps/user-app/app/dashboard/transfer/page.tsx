@@ -3,7 +3,7 @@ import Balance from "../../../components/transfer/Balance";
 import Card from "../../../components/Card";
 import PageHeader from "../../../components/PageHeader";
 import RecentTransfer from "../../../components/transfer/RecentTransfer";
-import TransectionHistory from "../../../components/transfer/RecentTransfer";
+// import TransectionHistory from "../../../components/transfer/RecentTransfer";
 
 export default function () {
   return (

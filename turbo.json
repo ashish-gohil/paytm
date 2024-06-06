@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": ["**/.env", ".*local", "tsconfig.json"],
   "pipeline": {
     "build": {
       "outputs": [".next/**", "!.next/cache/**"]
@@ -17,6 +17,7 @@
     },
     "db:push": {
       "cache": false
-    }
+    },
+    "globalEnv": ["NEXTAUTH_SECRET"]
   }
 }

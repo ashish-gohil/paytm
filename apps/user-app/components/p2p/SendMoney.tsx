@@ -9,7 +9,7 @@ export default function () {
   const [mobileNumber, setMobileNumber] = useState<string | undefined>();
   const [isAmountError, setIsAmountError] = useState(true);
   const [isNumberError, setIsNumberError] = useState(true);
-  const [isMobileNumberVerified, setIsMobileNumberVerified] = useState(false);
+  // const [isMobileNumberVerified, setIsMobileNumberVerified] = useState(false);
 
   return (
     <>

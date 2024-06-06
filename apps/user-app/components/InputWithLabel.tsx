@@ -11,7 +11,8 @@ export default function ({
   isPrice: boolean;
   placeHolderText: string;
   className? : string;
-  inputValue : string | number | undefined;
+  inputValue : string | number | undefined;  
+  // eslint-disable-next-line no-unused-vars
 inputChangeHandler: (e:React.ChangeEvent<HTMLInputElement>)=>void
 }) {
   return (
