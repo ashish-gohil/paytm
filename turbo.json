@@ -17,7 +17,6 @@
     },
     "db:push": {
       "cache": false
-    },
-    "globalEnv": ["NEXTAUTH_SECRET"]
+    }
   }
 }
