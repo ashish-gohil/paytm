@@ -1,5 +1,5 @@
 import GetPaytmButton from "../components/GetPaytmButton";
-
+import Image from "next/image";
 export default function Page(): JSX.Element {
   return (
     <div className="block relative">
@@ -23,12 +23,13 @@ export default function Page(): JSX.Element {
             </div>
           </div>
           <div className="relative w-full sm:w-[160%] ">
-            <img
+            <Image
               className="sm:rounded-[16px]"
+              alt="'Image"
               src={
                 "https://images.ctfassets.net/gkyt4bl1j2fs/1h5eef6Hd2rJIt5aB0hhTn/862a378332b917d1d375329481044d67/home-hero-mobile.png?w=750&h=500&q=50&fm=webp&bg=transparent"
               }
-            ></img>
+            ></Image>
           </div>
         </div>
       </div>
