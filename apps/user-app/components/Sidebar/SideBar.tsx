@@ -8,6 +8,7 @@ import P2PTransferIcon from "../Icons/P2PTransferIcon";
 
 interface SidebarParams {
   activeTab: ActiveTab;
+  // eslint-disable-next-line no-unused-vars
   setActiveTab: (arg0: ActiveTab) => void;
 }
 export default function ({ activeTab, setActiveTab }: SidebarParams) {

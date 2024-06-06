@@ -19,10 +19,10 @@ export const authOptions = {
       //@ts-ignore
       async authorize(credentials) {
         // Do zod validation, OTP validation here
-        const hashedPassword = await bcrypt.hash(
-          credentials?.password || "",
-          10
-        );
+        // const hashedPassword = await bcrypt.hash(
+        //   credentials?.password || "",
+        //   10
+        // );
         const existingUser = await db.user.findFirst({
           where: {
             mobileNumber: credentials?.phone,

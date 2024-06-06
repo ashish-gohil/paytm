@@ -5,10 +5,14 @@ import DropdownWithLabel from "../DropdownWithLabel";
 import HorizontalLineSaperator from "../HorizontalLineSaperator";
 import InputWithLabel from "../InputWithLabel";
 // import { Provider } from "@prisma/client";
-import { useRouter } from "next/navigation";
-export enum Provider {
-  BOB = "BOB",
+// import { useRouter } from "next/navigation";
+// eslint-disable-next-line no-unused-vars
+export enum Provider {  
+  // eslint-disable-next-line no-unused-vars
+  BOB = "BOB",  
+  // eslint-disable-next-line no-unused-vars
   SBI = "SBI",
+  // eslint-disable-next-line no-unused-vars
   ICICI = "ICICI",
 }
 export type BankOption = {
@@ -41,8 +45,9 @@ export default function () {
   );
   const [amount, setAmount] = useState<string | undefined>();
   const [isError, setIsError] = useState(true);
-  const router = useRouter();
+  // const router = useRouter();
 
+  // eslint-disable-next-line no-unused-vars
   const onChangeBankOption: (val: Provider) => void = (val) => {
     const bank =
       bankOptions.find((bank) => bank.value === val) || bankOptions[0];
