@@ -26,7 +26,7 @@ export default function Page(): JSX.Element {
           <div className="relative w-full sm:w-[160%] ">
             <Image
               className="sm:rounded-[16px]"
-              alt="Image"
+              alt="'Image"
               src={
                 "https://images.ctfassets.net/gkyt4bl1j2fs/1h5eef6Hd2rJIt5aB0hhTn/862a378332b917d1d375329481044d67/home-hero-mobile.png?w=750&h=500&q=50&fm=webp&bg=transparent"
               }
