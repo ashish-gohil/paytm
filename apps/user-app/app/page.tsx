@@ -1,3 +1,4 @@
+import Image from "next/image";
 import GetPaytmButton from "../components/GetPaytmButton";
 export default function Page(): JSX.Element {
   return (
