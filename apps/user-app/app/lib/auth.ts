@@ -42,6 +42,7 @@ export const authOptions = {
       },
     }),
   ],
+  // eslint-disable-next-line turbo/no-undeclared-env-vars
   secret: process.env.NEXTAUTH_SECRET || "secret",
   callbacks: {
     // TODO: can u fix the type here? Using any is bad

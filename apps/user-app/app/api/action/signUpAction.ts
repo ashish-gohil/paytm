@@ -9,6 +9,7 @@ interface SignUpArgs {
 }
 export default async function ({ name, email, password, mobile }: SignUpArgs) {
   const hashedPassword = await bcrypt.hash(password, 10);
+  console.log(hashedPassword);
   const user = await prisma.user.create({
     data: {
       email,

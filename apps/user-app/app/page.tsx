@@ -1,5 +1,5 @@
-import GetPaytmButton from "../components/GetPaytmButton";
 import Image from "next/image";
+import GetPaytmButton from "../components/GetPaytmButton";
 export default function Page(): JSX.Element {
   return (
     <div className="block relative">
