@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import HorizontalLineSaperator from "../HorizontalLineSaperator";
-import InputWithLabel from "../InputWithLabel";
+import InputWithLabel from "../PriceInput";
 import { p2pTransfer } from "../../app/api/action/p2pTransaction";
 
 export default function () {
@@ -16,41 +16,67 @@ export default function () {
       <div className="header font-semibold p-1 text-center">Send Money</div>
       <HorizontalLineSaperator />
       <div className="flex flex-col p-1 ">
-        <InputWithLabel
-          placeHolderText="0.00"
-          isPrice={true}
-          labelText="Amount"
-          className=""
-          inputChangeHandler={(e) => {
-            setAmount(e.target.value);
-            if (!Number(e.target.value)) {
-              setIsAmountError(true);
-            } else {
-              setIsAmountError(false);
-            }
-          }}
-          inputValue={amount}
-        />
+        <label
+          htmlFor="price"
+          className="block text-sm font-medium leading-6 text-gray-900"
+        >
+          Amount
+        </label>
+        <div className="relative mt-2 rounded-md shadow-sm">
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <span className="text-gray-500 sm:text-sm">₹</span>
+          </div>
+
+          <input
+            type="text"
+            name="price"
+            id="price"
+            className={`block w-full rounded-md border-0 py-1.5 pl-7 pr-1 text-gray-900 ring-purple-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6`}
+            placeholder={"0.00"}
+            value={amount}
+            onChange={(e) => {
+              setAmount(e.target.value);
+              if (!Number(e.target.value)) {
+                setIsAmountError(true);
+              } else {
+                setIsAmountError(false);
+              }
+            }}
+          />
+        </div>
         {amount && isAmountError ? (
           <p className="text-red-500 text-xs">Enter valid amount</p>
         ) : (
           ""
-        )}
-        <InputWithLabel
-          placeHolderText="Enter Mobile Number."
-          isPrice={false}
-          labelText="Mobile Number"
-          className=""
-          inputChangeHandler={(e) => {
-            setMobileNumber(e.target.value);
-            if (!Number(e.target.value)) {
-              setIsNumberError(true);
-            } else {
-              setIsNumberError(false);
-            }
-          }}
-          inputValue={mobileNumber}
-        />
+        )}{" "}
+        <label
+          htmlFor="price"
+          className="block text-sm font-medium leading-6 text-gray-900"
+        >
+          Mobile Number
+        </label>
+        <div className="relative mt-2 rounded-md shadow-sm">
+          {/* <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+          <span className="text-gray-500 sm:text-sm">₹</span>
+        </div> */}
+
+          <input
+            type="text"
+            name="price"
+            id="mobileNumber"
+            className={`block w-full rounded-md border-0 py-1.5 pl-7 pr-1 text-gray-900 ring-purple-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6`}
+            placeholder={"Enter Mobile Number."}
+            value={mobileNumber}
+            onChange={(e) => {
+              setMobileNumber(e.target.value);
+              if (!Number(e.target.value)) {
+                setIsNumberError(true);
+              } else {
+                setIsNumberError(false);
+              }
+            }}
+          />
+        </div>
         {mobileNumber && isNumberError ? (
           <p className="text-red-500 text-xs">Enter valid mobile number</p>
         ) : (

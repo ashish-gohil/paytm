@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import SideBar from "../../components/Sidebar/SideBar";
 
 export type ActiveTab = "Home" | "Transfer" | "Transaction" | "P2PTransfer";
@@ -9,7 +10,24 @@ export default function ({
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  const [activeTab, setActiveTab] = useState<ActiveTab>("Home");
+  const pathname = usePathname();
+  console.log("path", pathname);
+  const [activeTab, setActiveTab] = useState<ActiveTab>(() => {
+    const pathName = pathname.split("/").at(-1);
+    switch (pathName) {
+      case "transfer":
+        return "Transfer";
+      case "home":
+        return "Home";
+      case "p2ptransfer":
+        return "P2PTransfer";
+
+      case "transaction":
+        return "Transaction";
+      default:
+        return "Home";
+    }
+  });
   return (
     <div className="flex flex-row">
       <SideBar activeTab={activeTab} setActiveTab={setActiveTab} />

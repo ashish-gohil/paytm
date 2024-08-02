@@ -1,0 +1,297 @@
+To create a Paytm project with Next.js and Redux using the App Router architecture, you will need to set up your Redux store properly and handle server-side rendering (SSR) as well as client-side state management. Below is a suggested folder structure along with code examples for setting up your Redux store, server actions, and pages.
+
+### Folder Structure
+Here's a folder structure that follows the feature-based approach and integrates server actions:
+
+```
+/app
+  /dashboard
+    /transferMoney
+      page.tsx
+    /transactionToBank
+      page.tsx
+    /p2pTransfer
+      page.tsx
+    layout.tsx
+    page.tsx
+    serverActions.ts
+  StoreProvider.tsx
+/lib
+  store.ts
+  hooks.ts
+  /features
+    /transactions
+      transactionsSlice.ts
+      transactionsActions.ts
+    /user
+      userSlice.ts
+      userActions.ts
+```
+
+### Setting Up Redux
+
+#### `lib/store.ts`
+```typescript
+import { configureStore } from '@reduxjs/toolkit';
+import transactionsReducer from './features/transactions/transactionsSlice';
+import userReducer from './features/user/userSlice';
+
+export const makeStore = () => {
+  return configureStore({
+    reducer: {
+      transactions: transactionsReducer,
+      user: userReducer,
+    },
+  });
+}
+
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
+```
+
+#### `lib/hooks.ts`
+```typescript
+import { TypedUseSelectorHook, useDispatch, useSelector, useStore } from 'react-redux';
+import type { AppDispatch, RootState, AppStore } from './store';
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppStore = () => useStore<AppStore>();
+```
+
+#### `lib/features/transactions/transactionsSlice.ts`
+```typescript
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+interface TransactionState {
+  transactions: Array<any>;
+}
+
+const initialState: TransactionState = {
+  transactions: [],
+};
+
+const transactionsSlice = createSlice({
+  name: 'transactions',
+  initialState,
+  reducers: {
+    setTransactions(state, action: PayloadAction<Array<any>>) {
+      state.transactions = action.payload;
+    },
+  },
+});
+
+export const { setTransactions } = transactionsSlice.actions;
+export default transactionsSlice.reducer;
+```
+
+#### `lib/features/user/userSlice.ts`
+```typescript
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+interface UserState {
+  user: any;
+}
+
+const initialState: UserState = {
+  user: null,
+};
+
+const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    setUser(state, action: PayloadAction<any>) {
+      state.user = action.payload;
+    },
+  },
+});
+
+export const { setUser } = userSlice.actions;
+export default userSlice.reducer;
+```
+
+### Store Provider
+
+#### `app/StoreProvider.tsx`
+```typescript
+'use client';
+
+import { useRef } from 'react';
+import { Provider } from 'react-redux';
+import { makeStore, AppStore } from '../lib/store';
+
+export default function StoreProvider({ children }: { children: React.ReactNode }) {
+  const storeRef = useRef<AppStore>();
+
+  if (!storeRef.current) {
+    storeRef.current = makeStore();
+  }
+
+  return <Provider store={storeRef.current}>{children}</Provider>;
+}
+```
+
+### Server Actions
+
+#### `app/dashboard/serverActions.ts`
+```typescript
+import { makeStore } from '../../lib/store';
+import { setTransactions } from '../../lib/features/transactions/transactionsSlice';
+import { setUser } from '../../lib/features/user/userSlice';
+
+export async function fetchInitialData() {
+  const store = makeStore();
+
+  // Fetch data from your API or database
+  const transactions = await fetchTransactionsFromAPI();
+  const user = await fetchUserFromAPI();
+
+  store.dispatch(setTransactions(transactions));
+  store.dispatch(setUser(user));
+
+  return store.getState();
+}
+
+async function fetchTransactionsFromAPI() {
+  // Replace with your actual data fetching logic
+  return [];
+}
+
+async function fetchUserFromAPI() {
+  // Replace with your actual data fetching logic
+  return null;
+}
+```
+
+### Pages
+
+#### `app/dashboard/page.tsx`
+```typescript
+'use client';
+
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { fetchInitialData } from './serverActions';
+
+export default function Dashboard() {
+  const dispatch = useAppDispatch();
+  const transactions = useAppSelector((state) => state.transactions.transactions);
+  const user = useAppSelector((state) => state.user.user);
+
+  useEffect(() => {
+    // Fetch initial data when the component mounts
+    fetchInitialData().then((initialState) => {
+      dispatch(setTransactions(initialState.transactions));
+      dispatch(setUser(initialState.user));
+    });
+  }, [dispatch]);
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <pre>{JSON.stringify(transactions, null, 2)}</pre>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
+    </div>
+  );
+}
+```
+
+#### `app/dashboard/transferMoney/page.tsx`
+```typescript
+'use client';
+
+import { useAppSelector, useAppDispatch } from '../../../lib/hooks';
+import { useEffect } from 'react';
+import { fetchInitialData } from '../serverActions';
+
+export default function TransferMoney() {
+  const transactions = useAppSelector((state) => state.transactions.transactions);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // Fetch initial data when the component mounts
+    fetchInitialData().then((initialState) => {
+      dispatch(setTransactions(initialState.transactions));
+    });
+  }, [dispatch]);
+
+  return (
+    <div>
+      <h1>Transfer Money</h1>
+      <pre>{JSON.stringify(transactions, null, 2)}</pre>
+    </div>
+  );
+}
+```
+
+#### `app/dashboard/transactionToBank/page.tsx`
+```typescript
+'use client';
+
+import { useAppSelector, useAppDispatch } from '../../../lib/hooks';
+import { useEffect } from 'react';
+import { fetchInitialData } from '../serverActions';
+
+export default function TransactionToBank() {
+  const transactions = useAppSelector((state) => state.transactions.transactions);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // Fetch initial data when the component mounts
+    fetchInitialData().then((initialState) => {
+      dispatch(setTransactions(initialState.transactions));
+    });
+  }, [dispatch]);
+
+  return (
+    <div>
+      <h1>Transaction to Bank</h1>
+      <pre>{JSON.stringify(transactions, null, 2)}</pre>
+    </div>
+  );
+}
+```
+
+#### `app/dashboard/p2pTransfer/page.tsx`
+```typescript
+'use client';
+
+import { useAppSelector, useAppDispatch } from '../../../lib/hooks';
+import { useEffect } from 'react';
+import { fetchInitialData } from '../serverActions';
+
+export default function P2PTransfer() {
+  const transactions = useAppSelector((state) => state.transactions.transactions);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // Fetch initial data when the component mounts
+    fetchInitialData().then((initialState) => {
+      dispatch(setTransactions(initialState.transactions));
+    });
+  }, [dispatch]);
+
+  return (
+    <div>
+      <h1>P2P Transfer</h1>
+      <pre>{JSON.stringify(transactions, null, 2)}</pre>
+    </div>
+  );
+}
+```
+
+### Server Actions in Pages
+
+To utilize server actions properly, you'll need to pre-render data at the server end and then pass it down to the client components. However, direct use of Redux store data in server actions isn't supported due to the architecture limitations. Instead, fetch data in server actions, hydrate the initial state, and pass it to the Redux store on the client side as shown.
+
+### Putting it All Together
+
+Ensure you have the necessary packages installed:
+
+```sh
+npm install @reduxjs/toolkit react-redux
+```
+
+Then, you can start your application, and it should be able to handle both server-side and client-side state management seamlessly with Redux and the Next.js App Router architecture.

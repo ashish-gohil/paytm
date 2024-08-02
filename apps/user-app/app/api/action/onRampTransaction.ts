@@ -1,15 +1,13 @@
 "use server";
 import { getServerSession } from "next-auth";
 import prisma from "@repo/db/client";
-// import { Provider } from "@prisma/client";
-import { authOptions } from "../../lib/auth";
-
-import { Provider } from "../../../components/transfer/AddMoney";
+import { authOptions } from "../../authLib/auth";
 
 export async function createOnRampTransaction(
-  provider: Provider,
+  provider: string,
   amount: number
 ) {
+  console.log("transaction:", provider, amount);
   try {
     const session = await getServerSession(authOptions);
     // @ts-ignore
@@ -17,19 +15,26 @@ export async function createOnRampTransaction(
       console.log(session?.user?.id);
       const data = await prisma.onRampTransaction.create({
         data: {
-          provider,
+          user: {
+            connect: { id: Number(session?.user?.id) },
+          },
+          provider: {
+            connect: { id: provider },
+          },
           amount: amount * 100,
           startTime: new Date(),
           token: String(Math.random()), // idealy it should be provided by bank, by calling bank api with userid and amount
           // @ts-ignore
-          userId: Number(session?.user?.id || 1),
+          // userId: Number(session?.user?.id || 1),
+          // providerId: provider,
         },
       });
+      console.log("//////////////////////////111");
       console.log(data);
       return true;
     }
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     return false;
   }
 }
