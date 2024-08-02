@@ -24,4 +24,5 @@ const bankOptionsSlice = createSlice({
 });
 
 export const { setBankOptions, setSelectedBank } = bankOptionsSlice.actions;
-export default bankOptionsSlice.reducer;
+export const bankOptionsReducer = bankOptionsSlice.reducer;
+

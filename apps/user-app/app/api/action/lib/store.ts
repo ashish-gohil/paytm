@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 // import transferReducer from "./features/transfers/transferSlice";
-import bankOptionsReducer from "./features/bankOptionsSlice";
-import transferReducer from "./features/transferSlice";
+import { bankOptionsReducer } from "./features/bankOptionsSlice";
+import { transferReducer } from "./features/transferSlice";
 
 export const makeStore = () => {
   return configureStore({

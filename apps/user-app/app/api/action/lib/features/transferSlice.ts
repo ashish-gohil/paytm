@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface TransferState {
+export interface TransferState {
   addAmount: number;
 }
 
@@ -19,4 +19,4 @@ const transferSlice = createSlice({
 });
 
 export const { setAmount } = transferSlice.actions;
-export default transferSlice.reducer;
+export const transferReducer = transferSlice.reducer;
