@@ -1,4 +1,4 @@
-export default function () {
+export default function ({ onClickHandler }: { onClickHandler: any }) {
   return (
     <svg
       width="98"
@@ -6,6 +6,7 @@ export default function () {
       viewBox="0 0 98 46"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      onClick={onClickHandler}
     >
       <g filter="url(#filter0_d_0_1)">
         <mask id="path-1-inside-1_0_1" fill="white">

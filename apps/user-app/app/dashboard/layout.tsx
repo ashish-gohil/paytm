@@ -3,7 +3,11 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import SideBar from "../../components/Sidebar/SideBar";
 
-export type ActiveTab = "Home" | "Transfer" | "Transaction" | "P2PTransfer";
+export type ActiveTab =
+  | "Home"
+  | "Bank Transfer"
+  | "Transaction"
+  | "P2PTransfer";
 
 export default function ({
   children,
@@ -16,7 +20,7 @@ export default function ({
     const pathName = pathname.split("/").at(-1);
     switch (pathName) {
       case "transfer":
-        return "Transfer";
+        return "Bank Transfer";
       case "home":
         return "Home";
       case "p2ptransfer":

@@ -1,14 +1,20 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Logo from "./Logo";
+import { useRouter } from "next/navigation";
 
 export default function () {
   const session = useSession();
   console.log(session?.status);
+  const router = useRouter();
   return (
     <div className="flex flex-row items-center bg-blue-50 p-2 justify-between h-13">
       <div>
-        <Logo />
+        <Logo
+          onClickHandler={() => {
+            router.push("/");
+          }}
+        />
       </div>
       <div className="flex flex-row justify-between items-center">
         {session?.status === "authenticated" ? (
@@ -31,15 +37,15 @@ export default function () {
             <div className="p-2">
               <button
                 onClick={() => {
-                  signIn(undefined, { callbackUrl: "/dashboard" });
+                  signIn(undefined, { callbackUrl: "/dashboard/transfer" });
                 }}
               >
                 UserLogin
               </button>
             </div>
-            <div className="p-2">
+            {/* <div className="p-2">
               <button onClick={() => {}}>MerchentLogin</button>
-            </div>
+            </div> */}
           </>
         )}
       </div>

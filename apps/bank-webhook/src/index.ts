@@ -11,27 +11,21 @@ app.get("/", (req, res) => {
   console.log(req.body);
   res.status(200).json({ message: "Healthy Server!" });
 });
-
+type BodyType = {
+  amount: number;
+  userId: number;
+  token: string;
+  finalStatus: string;
+};
 app.post("/bob-webhook", async (req, res) => {
-  console.log(req.body);
-  const {
-    amount,
-    userId,
-    token,
-    finalStatus,
-  }: {
-    amount: number;
-    userId: number;
-    token: string;
-    finalStatus: string;
-  } = req.body;
+  const { amount, userId, token, finalStatus }: BodyType = req.body;
   // do some db manipulation
   const status =
     finalStatus === "success"
       ? Status.SUCCESSFUL
       : finalStatus === "failure"
         ? Status.FAILED
-        : Status.PROCESSIONG;
+        : Status.PROCESSING;
   try {
     if (finalStatus === "success") {
       prisma.$transaction(async (tx) => {
@@ -48,7 +42,7 @@ app.post("/bob-webhook", async (req, res) => {
           where: { id: userId },
           data: {
             availableBalance: {
-              increment: amount * 100,
+              increment: (amount * 100),
             },
           },
         });
@@ -91,38 +85,63 @@ app.post("/bob-webhook", async (req, res) => {
 });
 
 app.post("/sbi-webhook", async (req, res) => {
-  const {
-    token,
-    finalStatus,
-  }: {
-    token: string;
-    finalStatus: string;
-  } = req.body;
+  const { amount, userId, token, finalStatus }: BodyType = req.body;
   // do some db manipulation
   const status =
     finalStatus === "success"
       ? Status.SUCCESSFUL
       : finalStatus === "failure"
         ? Status.FAILED
-        : Status.PROCESSIONG;
-
+        : Status.PROCESSING;
   try {
-    const record = await prisma.onRampTransaction.update({
-      where: {
-        token,
-      },
-      data: {
-        status: status,
-      },
-    });
-    if (record) {
-      res.status(200).json({
-        message: "Success",
+    if (finalStatus === "success") {
+      prisma.$transaction(async (tx) => {
+        const record = await tx.onRampTransaction.update({
+          where: {
+            token,
+          },
+          data: {
+            status: status,
+          },
+        });
+        console.log(record);
+        const userUpdate = await tx.user.update({
+          where: { id: userId },
+          data: {
+            availableBalance: {
+              increment:( amount * 100),
+            },
+          },
+        });
+        if (record && userUpdate) {
+          res.status(200).json({
+            message: "Success",
+          });
+        } else {
+          res.status(404).json({
+            message: "Failure!",
+          });
+        }
       });
     } else {
-      res.status(404).json({
-        message: "Failure!",
+      const record = await prisma.onRampTransaction.update({
+        where: {
+          token,
+        },
+        data: {
+          status: status,
+        },
       });
+      console.log(record);
+      if (record) {
+        res.status(200).json({
+          message: "Success",
+        });
+      } else {
+        res.status(404).json({
+          message: "Failure!",
+        });
+      }
     }
   } catch (err) {
     console.log(err);
@@ -133,40 +152,66 @@ app.post("/sbi-webhook", async (req, res) => {
 });
 
 app.post("/icici-webhook", async (req, res) => {
-  const {
-    token,
-    finalStatus,
-  }: {
-    token: string;
-    finalStatus: string;
-  } = req.body;
+  const { amount, userId, token, finalStatus }: BodyType = req.body;
   // do some db manipulation
   const status =
     finalStatus === "success"
       ? Status.SUCCESSFUL
       : finalStatus === "failure"
         ? Status.FAILED
-        : Status.PROCESSIONG;
-
+        : Status.PROCESSING;
   try {
-    const record = await prisma.onRampTransaction.update({
-      where: {
-        token,
-      },
-      data: {
-        status: status,
-      },
-    });
-    if (record) {
-      res.status(200).json({
-        message: "Success",
+    if (finalStatus === "success") {
+      prisma.$transaction(async (tx) => {
+        const record = await tx.onRampTransaction.update({
+          where: {
+            token,
+          },
+          data: {
+            status: status,
+          },
+        });
+        console.log(record);
+        const userUpdate = await tx.user.update({
+          where: { id: userId },
+          data: {
+            availableBalance: {
+              increment: (amount * 100),
+            },
+          },
+        });
+        if (record && userUpdate) {
+          res.status(200).json({
+            message: "Success",
+          });
+        } else {
+          res.status(404).json({
+            message: "Failure!",
+          });
+        }
       });
     } else {
-      res.status(404).json({
-        message: "Failure!",
+      const record = await prisma.onRampTransaction.update({
+        where: {
+          token,
+        },
+        data: {
+          status: status,
+        },
       });
+      console.log(record);
+      if (record) {
+        res.status(200).json({
+          message: "Success",
+        });
+      } else {
+        res.status(404).json({
+          message: "Failure!",
+        });
+      }
     }
   } catch (err) {
+    console.log(err);
     res.status(400).json({
       message: "Failure!",
     });

@@ -1,16 +1,32 @@
 "use client";
 import { useState } from "react";
 import HorizontalLineSaperator from "../HorizontalLineSaperator";
-import InputWithLabel from "../PriceInput";
 import { p2pTransfer } from "../../app/api/action/p2pTransaction";
+import PopUp from "../Popup";
 
 export default function () {
   const [amount, setAmount] = useState<string | undefined>();
   const [mobileNumber, setMobileNumber] = useState<string | undefined>();
   const [isAmountError, setIsAmountError] = useState(true);
   const [isNumberError, setIsNumberError] = useState(true);
+  const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // const [isMobileNumberVerified, setIsMobileNumberVerified] = useState(false);
-
+  const sendMoneyButtonHandler = async () => {
+    // window.location.href = selectdBank?.redirectUrl || "";
+    try {
+      const rec = await p2pTransfer(Number(mobileNumber), Number(amount));
+      console.log(rec);
+      setMessage("Transfer Successfull!");
+      setIsSuccess(true);
+    } catch (err: any) {
+      setMessage(err?.message);
+      setIsSuccess(false);
+    } finally {
+      setIsModalOpen(true);
+    }
+  };
   return (
     <>
       <div className="header font-semibold p-1 text-center">Send Money</div>
@@ -86,16 +102,21 @@ export default function () {
       <div className="w-full flex justify-center my-2 ">
         <button
           className="bg-blue-400 hover:bg-blue-500 p-1 rounded-md duration-200 disabled:bg-blue-300 disabled:text-gray-600 disabled:cursor-not-allowed"
-          onClick={async () => {
-            // window.location.href = selectdBank?.redirectUrl || "";
-            const rec = await p2pTransfer(Number(mobileNumber), Number(amount));
-            console.log(rec);
-          }}
+          onClick={sendMoneyButtonHandler}
           disabled={isAmountError || isNumberError ? true : false}
         >
           Send Money
         </button>
       </div>
+      {isModalOpen ? (
+        <PopUp
+          message={message}
+          isSuccess={isSuccess}
+          setIsModalOpen={setIsModalOpen}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 }

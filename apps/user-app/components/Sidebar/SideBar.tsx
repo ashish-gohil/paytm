@@ -1,7 +1,6 @@
 "use client";
-import HomeIcon from "../Icons/HomeIcon";
+// import HomeIcon from "../Icons/HomeIcon";
 import SidebarItem from "./SidebarItem";
-import TransectionIcon from "../Icons/TransectionIcon";
 import TransferIcon from "../Icons/TransferIcon";
 import { ActiveTab } from "../../app/dashboard/layout";
 import P2PTransferIcon from "../Icons/P2PTransferIcon";
@@ -15,7 +14,7 @@ export default function ({ activeTab, setActiveTab }: SidebarParams) {
   return (
     <div className="bg-purple-200 w-[20%] h-screen">
       <div className="flex flex-col px-1 justify-center items-center pt-10">
-        <SidebarItem
+        {/* <SidebarItem
           itemName="Home"
           isActive={activeTab === "Home"}
           onClick={() => {
@@ -23,17 +22,17 @@ export default function ({ activeTab, setActiveTab }: SidebarParams) {
           }}
         >
           <HomeIcon />
-        </SidebarItem>
+        </SidebarItem> */}
         <SidebarItem
           itemName="Transfer"
-          isActive={activeTab === "Transfer"}
+          isActive={activeTab === "Bank Transfer"}
           onClick={() => {
-            setActiveTab("Transfer");
+            setActiveTab("Bank Transfer");
           }}
         >
           <TransferIcon />
         </SidebarItem>
-        <SidebarItem
+        {/* <SidebarItem
           itemName="Transaction"
           isActive={activeTab === "Transaction"}
           onClick={() => {
@@ -41,7 +40,7 @@ export default function ({ activeTab, setActiveTab }: SidebarParams) {
           }}
         >
           <TransectionIcon />
-        </SidebarItem>
+        </SidebarItem> */}
         <SidebarItem
           itemName="P2PTransfer"
           isActive={activeTab === "P2PTransfer"}
