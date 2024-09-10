@@ -8,7 +8,10 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prisma-studio": "cd ./packages/db && npx prisma studio && cd ../../",
     "db:migrate": "cd ./packages/db && npx prisma migrate dev && cd ../../",
-    "db:generate": "cd ./packages/db && npx prisma generate && cd ../../"
+    "db:generate": "cd ./packages/db && npx prisma generate && cd ../../",
+    "start-user-app": "cd ./apps/user-app && npm run start && cd ../../",
+    "start-web-hook": "cd ./apps/bank-webhook && npm run start && cd ../../",
+    "bank-webhook-build": "cd ./apps/bank-webhook && npm run build && cd ../../"
   },
   "devDependencies": {
     "@repo/common": "*",
